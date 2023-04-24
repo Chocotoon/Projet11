@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <script src="https://kit.fontawesome.com/3f8cf997bb.js" crossorigin="anonymous"></script>
-    <title></title>
+    <title>motaphoto.com</title>
     <?php wp_head() ?>
 </head>
 <div class="navigation">

@@ -19,11 +19,11 @@ function mytheme_styles()
 {
     wp_enqueue_style('parent-style', get_template_directory_uri() . '/style.css');
     wp_enqueue_script('parent-script', get_template_directory_uri() . '/js/scripts.js', array(), false, true);
-    if (is_singular()) : wp_enqueue_script('modale-script', get_template_directory_uri() . '/js/modale.js', array(), false, true); endif;
+    if (is_singular()) : wp_enqueue_script('modale-script', get_template_directory_uri() . '/js/modale.js', array(), false, true);
+    endif;
 }
 
-//Ajout des éléments de menus complémentaires
-add_filter('wp_nav_menu_items', 'add_contact', 10, 2);
+
 function add_contact($items, $args)
 {
     if ($args->theme_location == 'header') {
@@ -40,3 +40,6 @@ function add_mention($items, $args)
     }
     return $items;
 }
+
+//Ajout des éléments de menus complémentaires
+add_filter('wp_nav_menu_items', 'add_contact', 10, 2);
