@@ -105,6 +105,6 @@ get_header(); ?>
         wp_reset_query();
         ?>
     </section>
-    <button id="load_more">Charger plus</button>
+    <button id="load_more"><span>Charger plus</span></button>
 </main>
 <?php get_footer() ?>

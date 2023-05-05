@@ -20,23 +20,23 @@ window.onclick = function (event) {
     }
 }
 
+// Récupère la référence de la photo et l'intègre dans le champ de la modale correspondant
+const ref_photo = document.querySelector('.ref_photo');
+if (ref_photo != null) {
+
+const ref = ref_photo.getAttribute('ref');
+$(document).ready(function () {
+    $("#modale_ref").val(ref);
+});
+
+}
 
 
 // Gestion de la lightbox
 const links = Array.from(document.querySelectorAll('.expand'));
-const galerie = links.map(link => link.getAttribute('imgSrc'));
+let galerie = links.map(link => link.getAttribute('imgSrc'));
 const lightbox = document.querySelector('.lightbox');
 const lightboxImg = document.querySelector('.lightbox img');
-
-/*for (let i = 0; i < links.length; i++) {
-    link = links[i];
-
-    link.addEventListener('click', function (event) {
-
-        lightbox.style.display = 'block';
-        lightboxImg.src = this.getAttribute('imgSrc');
-    });
-};*/
 const closeLightbox = document.querySelector('.lightbox__close');
 closeLightbox.addEventListener('click', close)
 function close() {
@@ -45,8 +45,8 @@ function close() {
 
 /* Navigation dans la lightbox
 On récupère la position de l'image cliquée pour la navigation*/
-const articleContainer = document.querySelectorAll('.galerie_photos');
-articleContainer.forEach((expand, index) => {
+const articleExpand = document.querySelectorAll('.expand');
+articleExpand.forEach((expand, index) => {
     expand.addEventListener('click', () => {
         currentIndex = index;
         lightbox.style.display = 'block';
@@ -55,10 +55,15 @@ articleContainer.forEach((expand, index) => {
 });
 
 // On ajoute les événements aux flèches 
+
 const arrowRight = document.querySelector(".lightbox__next");
+if (arrowRight != null) {
 arrowRight.addEventListener("click", slideRight);
+}
 const arrowLeft = document.querySelector(".lightbox__prev");
+if (arrowLeft != null) {
 arrowLeft.addEventListener("click", slideLeft);
+}
 
 function slideRight() {
     currentIndex++;
@@ -85,34 +90,47 @@ let category = '';
 let format = '';
 let tri = '';
 const buttonLoad = document.querySelector('#load_more');
+if (buttonLoad != null) {
+
 buttonLoad.addEventListener('click', loadArticles);
+
+}
+
 const inputCategory = document.querySelector('#category');
+if (inputCategory != null) {
+
 inputCategory.addEventListener('change', loadArticles);
+
+}
+
 const inputFormat = document.querySelector('#format');
+if (inputFormat != null) {
+
 inputFormat.addEventListener('change', loadArticles);
+
+}
+
 const inputTri = document.querySelector('#tri');
+if (inputTri != null) {
+
 inputTri.addEventListener('change', loadArticles);
+
+}
+
 function loadArticles() {
-    galerie.splice(0, 12);
-    if (inputCategory.value != category) {
+
+    if (inputCategory.value != category || inputFormat.value != format || inputTri.value != tri) {
         category = inputCategory.value;
-        offset = 0;
-        document.getElementById('#galerie').innerHTML = '';
-    }
-    else if (inputFormat.value != format) {
         format = inputFormat.value;
-        offset = 0;
-        document.getElementById('#galerie').innerHTML = '';
-    }
-    else if (inputTri.value != tri) {
         tri = inputTri.value;
         offset = 0;
         document.getElementById('#galerie').innerHTML = '';
+        galerie = [];
     }
     else {
         offset += 12;
     }
-    
+
     fetch('/wp-content/themes/theme/fetch_articles.php?offset=' + offset + '&category=' + category + '&format=' + format + '&tri=' + tri)
         .then((response) => response.json())
         .then((data) => {
@@ -135,17 +153,11 @@ function loadArticles() {
                 articleContainer.appendChild(articleLien);
                 articleContainer.appendChild(articleExpand);
                 galeriePhoto.appendChild(articleContainer);
-              /*  if (offset = 0) {
-                    galerie.splice(0, galerie.length);
-                    galerie.push(data[i].thumbnail_url);
-                }
-                else if (offset != 0){
-                    galerie.push(data[i].thumbnail_url);
-                }*/
+
                 galerie.push(data[i].thumbnail_url);
             };
-            const articleContainer = document.querySelectorAll('.galerie_photos');
-            articleContainer.forEach((expand, index) => {
+            const articleExpand = document.querySelectorAll('.expand');
+            articleExpand.forEach((expand, index) => {
                 expand.addEventListener('click', () => {
                     currentIndex = index;
                     lightbox.style.display = 'block';
@@ -153,42 +165,32 @@ function loadArticles() {
                 });
             });
         })
-
-
-    /*  const articleContainer = document.querySelectorAll('.galerie_photos');
-      articleContainer.forEach((expand, index) => {
-          expand.addEventListener('click', () => {
-              currentIndex = index;
-              lightbox.style.display = 'block';
-              lightboxImg.src = galerie[currentIndex];
-          });
-      });*/
-
-
 }
 
-/*articleExpand.addEventListener('click', function (event) {
-    event.preventDefault();
-    currentIndex = offset + i;
-    lightbox.style.display = 'block';
-    lightboxImg.src = this.getAttribute('imgSrc');
-});*/
+// Gestion du menu "burger"
+const buttonMenu = document.querySelector('.menu-toggle');
+const menuContainer = document.querySelector('.menu-menu-header-container')
+const navBar = document.querySelector('.navigation')
+buttonMenu.addEventListener('click', toggle);
 
-
-// Ajout des EventListenners aux boutons de filtres
-/*const buttonFilters = document.querySelectorAll('.filtres button');
-
-for (i = 0; i < buttonFilters.length; i++) {
-    buttonFilters[i].addEventListener('click', toggle);
-}
 
 function toggle() {
+
     const icone = this.querySelector('i');
+
     if (this.getAttribute('aria-expanded') === 'false') {
+
         this.setAttribute('aria-expanded', 'true');
-        icone.classList.replace('fa-caret-down', 'fa-caret-up')
-    } else {
-        this.setAttribute('aria-expanded', 'false');
-        icone.classList.replace('fa-caret-up', 'fa-caret-down')
+        icone.classList.replace('fa-bars', 'fa-xmark')
+        menuContainer.classList.add('fadeMenu');
+        navBar.style.position = 'fixed';
     }
-}*/
+    
+    else {
+
+        this.setAttribute('aria-expanded', 'false');
+        icone.classList.replace('fa-xmark', 'fa-bars')
+        menuContainer.classList.remove('fadeMenu');
+        navBar.style.position = 'relative';
+    }
+}

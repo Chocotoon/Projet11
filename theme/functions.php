@@ -18,9 +18,7 @@ add_action('wp_enqueue_scripts', 'mytheme_styles');
 function mytheme_styles()
 {
     wp_enqueue_style('parent-style', get_template_directory_uri() . '/style.css');
-    wp_enqueue_script('parent-script', get_template_directory_uri() . '/js/scripts.js', array(), false, true);
-    if (is_singular()) : wp_enqueue_script('modale-script', get_template_directory_uri() . '/js/modale.js', array(), false, true);
-    endif;
+    wp_enqueue_script('parent-script', get_template_directory_uri() . '/js/script.js', array(), false, true);
 }
 
 

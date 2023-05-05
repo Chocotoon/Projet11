@@ -22,7 +22,7 @@ if (get_post_type() == 'photo') : ?>
 		<div id="options_single">
 			<div class="intro_modale">
 				<p>Cette photo vous intéresse?</p>
-				<a class="btn_modale" href="#">Contact</a>
+				<button class="btn_modale" href="#">Contact</button>
 			</div>
 			<div class="options_controls">
 				<?php $prev_post = get_adjacent_post(false, '', true);
